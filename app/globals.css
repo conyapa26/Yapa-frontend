@@ -1,0 +1,293 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* --background: #0a0a0a;
+    --foreground: #ededed; */
+    --background: #ffffff;
+    --foreground: #171717;
+  }
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+.hero-carousel {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1920 / 800;
+  max-height: 80vh;
+  overflow: hidden;
+  background: #000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-image {
+  position: absolute;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+  object-position: center 55%;
+
+  opacity: 0;
+  transition: opacity 0.8s ease;
+
+  pointer-events: none;
+}
+
+.hero-image.active {
+  opacity: 1;
+  pointer-events: auto;
+  z-index: 2;
+}
+
+/* Si alguna imagen no debe tener zoom */
+
+
+
+/* Overlay opcional */
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.25);
+  z-index: 3;
+}
+
+/* Flechas */
+.hero-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 5;
+
+  width: 52px;
+  height: 52px;
+  border: none;
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(8px);
+  color: white;
+  font-size: 2rem;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: all 0.25s ease;
+}
+
+.hero-arrow:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-50%) scale(1.05);
+}
+
+.hero-arrow.left {
+  left: 24px;
+}
+
+.hero-arrow.right {
+  right: 24px;
+}
+
+/* Dots */
+.hero-dots {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+
+  display: flex;
+  gap: 12px;
+}
+
+.hero-dots button {
+  width: 12px;
+  height: 12px;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+
+  background: rgba(255, 255, 255, 0.45);
+  transition: all 0.3s ease;
+}
+
+.hero-dots button.active {
+  width: 32px;
+  background: white;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .hero-carousel {
+    height: 70vh;
+  }
+
+  .hero-arrow {
+    width: 42px;
+    height: 42px;
+    font-size: 1.5rem;
+  }
+
+  .hero-arrow.left {
+    left: 12px;
+  }
+
+  .hero-arrow.right {
+    right: 12px;
+  }
+
+  .hero-dots {
+    bottom: 20px;
+  }
+}
+
+.hero-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;     /* 👈 CLAVE */
+  object-position: center; /* centrado real */
+
+  opacity: 0;
+  transition: opacity 0.8s ease-in-out;
+  z-index: 1;
+}
+
+.hero-video.no-zoom {
+  transform: scale(0.83); /* ajusta 0.95 / 0.9 / 0.85 */
+}
+
+.hero-video.active {
+  opacity: 1;
+  z-index: 2;
+}
+
+/* OVERLAY (opcional, puedes bajar opacidad o quitarlo) */
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.15); /* más suave */
+  z-index: 3;
+}
+
+/* FLECHAS */
+.hero-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 4;
+  font-size: 3rem;
+  color: white;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.hero-arrow.left {
+  left: 1rem;
+}
+
+.hero-arrow.right {
+  right: 1rem;
+}
+
+/* DOTS */
+.hero-dots {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.75rem;
+  z-index: 4;
+}
+
+.hero-dots button {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  border: none;
+  cursor: pointer;
+}
+
+.hero-dots button.active {
+  background: white;
+}
+
+
+/* =====================
+   FONDO DE ESTRELLAS
+===================== */
+
+.stars {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.stars::before,
+.stars::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(1px 1px at 20px 30px, white, transparent),
+    radial-gradient(1px 1px at 100px 80px, white, transparent),
+    radial-gradient(1px 1px at 200px 150px, white, transparent),
+    radial-gradient(1px 1px at 300px 200px, white, transparent),
+    radial-gradient(1px 1px at 400px 100px, white, transparent),
+    radial-gradient(1px 1px at 500px 250px, white, transparent),
+    radial-gradient(1px 1px at 600px 300px, white, transparent);
+  background-repeat: repeat;
+  background-size: 800px 600px;
+  opacity: 0.35;
+}
+
+.stars::after {
+  animation: stars-move 120s linear infinite;
+  opacity: 0.2;
+}
+
+@keyframes stars-move {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-2000px);
+  }
+}
+
+
+/* Colores Galaxia */
+
