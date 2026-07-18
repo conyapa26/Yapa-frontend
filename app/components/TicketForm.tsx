@@ -12,6 +12,12 @@ export const TicketForm = () => {
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [rut, setRut] = useState("");
   const [phoneDigits, setPhoneDigits] = useState("");
+  const [address, setAddress] = useState("");
+  const [apartment, setApartment] = useState("");
+
+  const fullAddress = apartment.trim()
+    ? `${address}, Depto ${apartment.trim()}`
+    : address;
 
   const handlePhoneChange = (e: { target: { value: string } }) => {
     // Solo dígitos, máximo 8 (número de celular chileno sin el +56 9)
@@ -120,11 +126,28 @@ export const TicketForm = () => {
               </label>
               <input
                 type="text"
-                name="address"
                 required
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
                 placeholder="Av. Siempre Viva 742, Santiago"
                 className="w-full p-3 rounded-xl border border-gray-300 text-gray-900 focus:ring-2 focus:ring-blue-500"
               />
+            </div>
+
+            {/* Número de Depto (Opcional) */}
+            <div>
+              <label className="block text-sm font-medium mb-1 text-gray-700">
+                Número de Depto (Opcional)
+              </label>
+              <input
+                type="text"
+                value={apartment}
+                onChange={(e) => setApartment(e.target.value)}
+                placeholder="Depto 405"
+                className="w-full p-3 rounded-xl border border-gray-300 text-gray-900 focus:ring-2 focus:ring-blue-500"
+              />
+              {/* Este es el valor real que se envía al backend, ya con el depto incluido */}
+              <input type="hidden" name="address" value={fullAddress} />
             </div>
 
             {/* Email */}
