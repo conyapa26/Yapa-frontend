@@ -10,6 +10,29 @@ import Navbar from "./nav/Navbar";
 export const TicketForm = () => {
   const [tickets, setTickets] = useState(1);
   const [acceptedTerms, setAcceptedTerms] = useState(false);
+  const [rut, setRut] = useState("");
+
+  const formatRut = (value: string) => {
+    // Deja solo números y K/k (el dígito verificador puede ser K)
+    const clean = value.replace(/[^0-9kK]/g, "").toUpperCase();
+
+    if (clean.length === 0) return "";
+
+    // Separa el cuerpo del dígito verificador (último caracter)
+    const body = clean.slice(0, -1);
+    const dv = clean.slice(-1);
+
+    if (body.length === 0) return dv;
+
+    // Agrega puntos cada 3 dígitos al cuerpo, de derecha a izquierda
+    const bodyWithDots = body.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+
+    return `${bodyWithDots}-${dv}`;
+  };
+
+  const handleRutChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setRut(formatRut(e.target.value));
+  };
 
   const [state, formAction] = useFormState(createTicket, {
     errors: [],
@@ -56,6 +79,7 @@ export const TicketForm = () => {
                 type="text"
                 name="name"
                 required
+                placeholder="Diego Hernández Mella"
                 className="
                   w-full p-3 rounded-xl
                   bg-white
@@ -77,6 +101,10 @@ export const TicketForm = () => {
                 type="text"
                 name="rut"
                 required
+                value={rut}
+                onChange={handleRutChange}
+                placeholder="12.345.678-9"
+                maxLength={12}
                 className="w-full p-3 rounded-xl border border-gray-300 text-gray-900 focus:ring-2 focus:ring-blue-500"
               />
             </div>
@@ -90,6 +118,7 @@ export const TicketForm = () => {
                 type="text"
                 name="address"
                 required
+                placeholder="Av. Siempre Viva 742, Santiago"
                 className="w-full p-3 rounded-xl border border-gray-300 text-gray-900 focus:ring-2 focus:ring-blue-500"
               />
             </div>
@@ -103,6 +132,7 @@ export const TicketForm = () => {
                 type="email"
                 name="email"
                 required
+                placeholder="diego.hernandez@ejemplo.cl"
                 className="w-full p-3 rounded-xl border border-gray-300 text-gray-900 focus:ring-2 focus:ring-blue-500"
               />
             </div>
@@ -116,6 +146,7 @@ export const TicketForm = () => {
                 type="tel"
                 name="phone"
                 required
+                placeholder="+56 9 1234 5678"
                 className="w-full p-3 rounded-xl border border-gray-300 text-gray-900 focus:ring-2 focus:ring-blue-500"
               />
             </div>
@@ -163,7 +194,7 @@ export const TicketForm = () => {
               />
               <div className="text-sm text-gray-600">
                 Acepto los{" "}
-                <a
+                
                   href="/bases-concurso.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
