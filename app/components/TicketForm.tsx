@@ -30,7 +30,7 @@ export const TicketForm = () => {
     return `${bodyWithDots}-${dv}`;
   };
 
-  const handleRutChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleRutChange = (e: { target: { value: string } }) => {
     setRut(formatRut(e.target.value));
   };
 
