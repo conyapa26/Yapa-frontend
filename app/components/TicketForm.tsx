@@ -193,18 +193,23 @@ export const TicketForm = () => {
               <label className="block text-sm font-medium mb-1 text-gray-700">
                 Cantidad de tickets
               </label>
-              <select
+              <input
+                type="number"
                 name="tickets"
+                min={1}
+                max={10}
+                step={1}
                 value={tickets}
-                onChange={(e) => setTickets(Number(e.target.value))}
+                onChange={(e) => {
+                  const value = Number(e.target.value);
+                  if (Number.isNaN(value)) {
+                    setTickets(1);
+                  } else {
+                    setTickets(Math.max(1, Math.min(10, Math.floor(value))));
+                  }
+                }}
                 className="w-full p-3 rounded-xl border border-gray-300 text-gray-900 focus:ring-2 focus:ring-blue-500"
-              >
-                {[1, 2, 3, 4, 5].map((n) => (
-                  <option key={n} value={n}>
-                    {n} ticket{n > 1 && "s"}
-                  </option>
-                ))}
-              </select>
+              />
             </div>
 
             {/* Resumen */}
