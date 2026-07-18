@@ -194,7 +194,7 @@ export const TicketForm = () => {
               />
               <div className="text-sm text-gray-600">
                 Acepto los{" "}
-                
+                <a
                   href="/bases-concurso.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
