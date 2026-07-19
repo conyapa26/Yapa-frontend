@@ -7,7 +7,7 @@ import { SubmitButton } from "./ui/FormButton";
 import { formatCLP } from "@/src/schema/utils/format";
 import Navbar from "./nav/Navbar";
 
-export const TicketForm = () => {
+export const TicketForm = ({ raffleId = 1 }: { raffleId?: number }) => {
   const [tickets, setTickets] = useState(1);
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [rut, setRut] = useState("");
@@ -79,6 +79,8 @@ export const TicketForm = () => {
           </h2>
 
           <form action={formAction} className="space-y-6">
+
+            <input type="hidden" name="raffleId" value={raffleId} />
 
             {/* Nombre */}
             <div>
