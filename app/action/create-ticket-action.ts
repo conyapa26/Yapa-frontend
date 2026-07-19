@@ -48,10 +48,14 @@ export async function createTicket(
     };
   }
 
+  // 🔹 Validar raffleId (viene del formulario; 1 como respaldo por compatibilidad)
+  const raffleIdRaw = formData.get('raffleId');
+  const raffleId = Number(raffleIdRaw) || 1;
+
   // 🔹 Payload EXACTO que espera el backend
   const payload = {
     user: parsedUser.data, // 👈 SOLO los datos
-    raffleId: 1,
+    raffleId,
     tickets,
   };
   console.log(payload)
